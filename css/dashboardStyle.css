@@ -1,0 +1,70 @@
+.nav {
+	width: 100%;
+}
+
+.nav ul {
+	padding: 0px;
+	margin: 0px;
+  	text-align: right;
+}
+.nav li {
+	list-style-type: none;
+	padding: 0px;
+  	display:inline;
+  
+}
+.nav li a {
+	color: #dab3ff;
+	text-transform: uppercase;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	padding: 8px;
+}
+
+.nav li a:hover:not(.active) {
+    font-style: italic;
+    color: #6900cc;
+}
+
+.header {
+	text-align: center;
+}
+.table {
+	text-align: center;
+}
+.table table {
+	width: 80%;
+	margin: 1em auto;
+}
+.table table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.table th, td {
+    padding: 10px;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+/*.titleCol {
+	text-align: center;
+}*/
+
+.titleCol a {
+	text-decoration: none;
+	color:#aa80ff;
+}
+
+/*.updated {
+	text-align: center;
+}
+
+.options {
+	text-align: center;
+}*/
+.options a {
+	text-decoration: none;
+	padding: 2%;
+}
