@@ -1,0 +1,58 @@
+body {
+	margin: 0;
+    background-color:#f1f1f1;
+}
+
+#register {
+	border-right: 1px solid black;
+}
+
+#register form {
+    color: #dab3ff;
+}
+
+#register h2 {
+	color: black;
+}
+
+#register input[type=text]:focus, input[type=password]:focus {
+    background-color: #f1f1f1;
+    border: 3px solid #555;
+}
+
+#register a {
+	font-size: 12px;
+}
+
+
+#login form {
+    color: #dab3ff;
+}
+
+#login h2 {
+	color: black;
+}
+
+#login input[type=text]:focus, input[type=password]:focus {
+    background-color: #f1f1f1;
+    border: 3px solid #555;
+}
+
+#login a {
+	font-size: 12px;
+}
+
+.row {
+	text-align: center;
+	padding-top: 5%;
+}
+.column {
+    float: left;
+    width: 49%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
