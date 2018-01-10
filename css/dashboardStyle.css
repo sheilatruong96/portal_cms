@@ -54,7 +54,7 @@
 
 .titleCol a {
 	text-decoration: none;
-	color:#aa80ff;
+	color: #aa80ff;
 }
 
 /*.updated {
@@ -64,7 +64,20 @@
 .options {
 	text-align: center;
 }*/
-.options a {
+/*.options a {
 	text-decoration: none;
 	padding: 2%;
+	color: #aa80ff;
+}*/
+
+.button {
+    background-color: transparent;
+    border-color: #aa80ff;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
