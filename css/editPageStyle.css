@@ -1,0 +1,69 @@
+body {
+	margin: 0;
+    background-color:#f1f1f1;
+}
+
+.header {
+	text-align: center;
+}
+
+.container {
+	padding-left: 20%;
+	padding-right: 20%;
+}
+
+.container label {
+	text-align: left;
+	font-size: 20px;
+	vertical-align: top;
+}
+
+#title input {
+	font-size: 20px;
+	width: 85%;
+	float: right;
+}
+
+
+#content textarea {
+	resize: none;
+	float: right;
+	width: 85%;
+}
+
+#url, #url input{
+	font-size: 20px;
+}
+
+#url input {
+	float: right;
+	width: 85%;
+}
+
+#template {
+	height: 100px;
+}
+
+#template select {
+	float:right;
+	width: 85%;
+}
+
+.section, #content {
+	padding-bottom: 10%;
+}
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+
+    text-align: center;
+    text-decoration: none;
+    /*display: inline-block;*/
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    float: right;
+}
