@@ -67,3 +67,7 @@ body {
     cursor: pointer;
     float: right;
 }
+
+hr {
+	opacity: 0.5;
+}
