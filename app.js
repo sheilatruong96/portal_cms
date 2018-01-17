@@ -7,8 +7,21 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var auth = require('./routes/auth');
+var dashboard = require('./routes/dashboard');
+
+var mongoose = require('mongoose');
+
+
 
 var app = express();
+mongoose.connect('mongodb://localhost/test');
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+	console.log('CONNCTED TO MONGO');
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,6 +37,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/auth', auth);
+app.use('/admin', dashboard);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

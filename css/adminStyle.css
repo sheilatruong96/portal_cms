@@ -1,0 +1,218 @@
+body {
+    background-color:#f1f1f1;
+}
+
+#register {
+    border-right: 1px solid black;
+}
+
+#register form {
+    color: #dab3ff;
+}
+
+#register h2 {
+    color: black;
+}
+
+#register input[type=text]:focus, input[type=password]:focus {
+    background-color: #f1f1f1;
+    border: 3px solid #555;
+}
+
+#register a {
+    font-size: 12px;
+}
+
+
+#login form {
+    color: #dab3ff;
+}
+
+#login h2 {
+    color: black;
+}
+
+#login input[type=text]:focus, input[type=password]:focus {
+    background-color: #f1f1f1;
+    border: 3px solid #555;
+}
+
+#login a {
+    font-size: 12px;
+}
+
+.row {
+    text-align: center;
+    padding-top: 5%;
+}
+.column {
+    float: left;
+    width: 49%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.header {
+    text-align:center;
+}
+
+.edit {
+    text-align: center;
+}
+
+.edit form {
+    color: #dab3ff;
+}
+
+.edit h2 {
+    color: black;
+}
+
+.edit input[type=text]:focus, input[type=password]:focus {
+    background-color: #f1f1f1;
+    border: 3px solid #555;
+}
+
+.edit a {
+    font-size: 12px;
+}
+
+
+.container {
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.container label {
+    text-align: left;
+    font-size: 20px;
+    vertical-align: top;
+}
+
+#title input {
+    font-size: 20px;
+    width: 85%;
+    float: right;
+}
+
+
+#content textarea {
+    resize: none;
+    float: right;
+    width: 85%;
+}
+
+#url, #url input{
+    font-size: 20px;
+}
+
+#url input {
+    float: right;
+    width: 85%;
+}
+
+#template {
+    height: 100px;
+}
+
+#template select {
+    float:right;
+    width: 85%;
+}
+
+.section, #content {
+    padding-bottom: 10%;
+}
+
+#editPageSave {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    float: right;
+}
+
+hr {
+    opacity: 0.5;
+}
+
+
+
+
+
+
+.nav {
+    width: 100%;
+}
+
+.nav ul {
+    padding: 0px;
+    margin: 0px;
+    text-align: right;
+}
+.nav li {
+    list-style-type: none;
+    padding: 0px;
+    display:inline;
+  
+}
+.nav li a {
+    color: #dab3ff;
+    text-transform: uppercase;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    padding: 8px;
+}
+
+.nav li a:hover:not(.active) {
+    font-style: italic;
+    color: #6900cc;
+}
+
+.table {
+    text-align: center;
+}
+.table table {
+    width: 80%;
+    margin: 1em auto;
+}
+.table table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.table th, td {
+    padding: 10px;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+
+.titleCol a {
+    text-decoration: none;
+    color: #aa80ff;
+}
+
+
+.options .button {
+    background-color: transparent;
+    border-color: #aa80ff;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
