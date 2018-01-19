@@ -216,3 +216,10 @@ hr {
     margin: 4px 2px;
     cursor: pointer;
 }
+
+footer {
+    text-align: center;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+}

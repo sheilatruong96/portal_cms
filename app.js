@@ -9,6 +9,11 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
 var dashboard = require('./routes/dashboard');
+var editPage = require('./routes/editPage');
+var editAccount = require('./routes/editAccount');
+var template = require('./routes/template');
+
+
 
 var mongoose = require('mongoose');
 
@@ -39,6 +44,9 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/auth', auth);
 app.use('/admin', dashboard);
+app.use('/admin', editPage);
+app.use('/admin', editAccount)
+app.use('/template', template)
 
 
 // catch 404 and forward to error handler
