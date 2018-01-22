@@ -5,12 +5,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// just added
+var session = require('client-sessions');
+var userModel = require('./models/user');
+
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
 var dashboard = require('./routes/dashboard');
-var editPage = require('./routes/editPage');
-var editAccount = require('./routes/editAccount');
 var template = require('./routes/template');
 
 
@@ -40,13 +43,39 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+// just added
+app.use(session({
+  cookieName: 'session',
+  secret: 'eg[isfd-8yF9-7w2315df{}+Ijsli;;to8',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+  httpOnly: true,
+  secure: true,
+  ephemeral: true
+}));
+
+app.use(function(req, res, next) {
+  if (req.session && req.session.user) {
+    userModel.findOne({ email: req.session.user.email }, function(err, user) {
+      if (user) {
+        req.user = user;
+        delete req.user.password; // delete the password from the session
+        req.session.user = user;  //refresh the session value
+        res.locals.user = user;
+      }
+      // finishing processing the middleware and run the route
+      next();
+    });
+  } else {
+    next();
+  }
+});
+
 app.use('/users', users);
 app.use('/auth', auth);
 app.use('/admin', dashboard);
-app.use('/admin', editPage);
-app.use('/admin', editAccount)
 app.use('/template', template)
+app.use('/', index);
 
 
 // catch 404 and forward to error handler

@@ -164,7 +164,7 @@ hr {
     list-style-type: none;
     padding: 0px;
     display:inline;
-  
+
 }
 .nav li a {
     color: #dab3ff;
@@ -216,6 +216,12 @@ hr {
     margin: 4px 2px;
     cursor: pointer;
 }
+
+.auth-error-container{
+  color: red;
+}  
+
+
 
 footer {
     text-align: center;

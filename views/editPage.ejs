@@ -5,16 +5,16 @@
 </header>
 
 <div class="container">
-	<form>
+	<form method="POST" action="/admin/addPage">
 		<div class="section">
 			<label id="title" >
-				Title: <input type="text" title="title" placeholder="My Template">
+				Title: <input type="text" name="title" placeholder="My Template">
 			</label>
 		</div>
 
 		<div class="section">
 			<label id="url">
-				URL: <input type="text" title="url" placeholder="http://www.myTemplate.com">
+				URL: <input type="text" name="url" placeholder="http://www.myTemplate.com">
 			</label>
 		</div>
 
@@ -32,13 +32,13 @@
 
 		<div class="section">
 			<label id="title" >
-				Header: <input type="text" title="header" placeholder="About">
+				Header: <input type="text" name="header" placeholder="About">
 			</label>
 		</div>
 
 		<div id="content">
 			<label>
-				Content: <textarea rows="8" cols="50" placeholder="Welcome to my website!"></textarea>
+				Content: <textarea rows="8" cols="50" name="content"placeholder="Welcome to my website!"></textarea>
 			</label>
 		</div>
 
@@ -49,24 +49,24 @@
 
 		<div class="section">
 			<label id="title" >
-				Header: <input type="text" title="header" placeholder="News">
+				Header: <input type="text" name="header2" placeholder="News">
 			</label>
 		</div>
 
 		<div id="content">
 			<label>
-				Content: <textarea rows="8" cols="50" placeholder=""></textarea>
+				Content: <textarea rows="8" cols="50" name="content2" placeholder=""></textarea>
 			</label>
+		</div>
+		<br>
+
+		<div>
+			<button id="editPageSave" class="button">Save</button>
 		</div>
 
 
 	</form>
 	
-	<br>
-
-	<div>
-		<button id="editPageSave" class="button">Save</button>
-	</div>
 </div>
 
 <% include footer %>

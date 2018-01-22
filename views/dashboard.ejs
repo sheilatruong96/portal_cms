@@ -3,9 +3,9 @@
 	<!-- Nav Bar -->
 	<nav class="nav">
 		<ul>
-			<li><a href="/admin/addPage">Add Page</a></li>
+			<li><a href="/admin/editPage">Add Page</a></li>
 			<li><a href="/admin/editAccount">Edit Account</a></li>
-			<li><a href="/auth">Log Out</a></li>
+			<li><a href="/admin/logout">Log Out</a></li>
 		</ul>
 	</nav>
 
@@ -17,11 +17,12 @@
 		<table>
 		  <tr>
 		    <th>Title</th>
-		    <th>Updated</th> 
+		    <th>Updated</th>
 		    <th>Options</th>
 		  </tr>
+			<% for(var i = 0; i < email.length; i++) { %>
 		  <tr>
-		    <td class="titleCol"><a href="#">Template1</a></td>
+		    <td class="titleCol"><a href="/<%= email[i].title %>"> <%= email[i].title %> </a></td>
 		    <td class="updated">Jan 8, 2018, 2:50 PM</td>
 		    <td class="options">
 				<button  class="button">Delete</button>
@@ -29,7 +30,8 @@
 				<button  class="button">Visibility</button>
 		    </td>
 		  </tr>
-		  <tr>
+			<% } %>
+		  <!-- <tr>
 		    <td class="titleCol"><a href="#">Template2</a></td>
 		    <td class="updated">Jan 1, 2018, 8:50 AM</td>
 		    <td class="options">
@@ -45,7 +47,7 @@
 				<button  class="button">Edit</button>
 				<button  class="button">Visibility</button>
 		    </td>
-		  </tr>
+		  </tr> -->
 		</table>
 	</div>
 
