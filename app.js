@@ -31,18 +31,6 @@ db.once('open', function() {
 	console.log('CONNCTED TO MONGO');
 });
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
 // just added
 app.use(session({
   cookieName: 'session',
@@ -56,11 +44,12 @@ app.use(session({
 
 app.use(function(req, res, next) {
   if (req.session && req.session.user) {
+		
     userModel.findOne({ email: req.session.user.email }, function(err, user) {
       if (user) {
-        req.user = user;
+        req.user = user.toObject(); //
         delete req.user.password; // delete the password from the session
-        req.session.user = user;  //refresh the session value
+        req.session.user = user;  //refresh the session value; updating/refreshing the session
         res.locals.user = user;
       }
       // finishing processing the middleware and run the route
@@ -70,6 +59,20 @@ app.use(function(req, res, next) {
     next();
   }
 });
+
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/users', users);
 app.use('/auth', auth);

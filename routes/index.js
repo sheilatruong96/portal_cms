@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var pagesModel = require('../models/page');
+var auth = require('../utils/auth');
+
+
+router.use(auth.requireLogin);
 
 // var mongoose = require('mongoose');
 
@@ -30,7 +34,7 @@ var pagesModel = require('../models/page');
 // });
 
 
-router.get('/:page',requireLogin, function(req, res) {
+router.get('/:page', function(req, res) {
 	pagesModel.findOne(
 	{ url: req.params.page.trim()},
 		function(err, page) {
@@ -42,6 +46,7 @@ router.get('/:page',requireLogin, function(req, res) {
 				});
 			} else {
 				res.status(404).send('404 - Not found');
+				// next();
 			}
 		}
 	);

@@ -2,35 +2,55 @@ var express = require('express');
 var router = express.Router();
 var pagesModel = require('../models/page');
 var userModel = require('../models/user');
-var requireLogin = require('./requireLogin');
 
-router.get('/', requireLogin, function(req, res) {
-  pagesModel.find({email: req.session.user.email}, function(err, email){
-    if (err) res.send(err);
-    if (email) {
+// fix this
+var auth = require('../utils/auth');
+
+router.use(auth.requireLogin);
+
+router.get('/', function(req, res) {
+  pagesModel.find({"user._id": req.user._id}, function(err, info){
+    if (err) return res.send(err);
+    if (info) {
       res.render('dashboard', {
-      email: email
+      user: info
     });
   };
 });
 });
 
+router.get('/delete/:url', function(req, res) {
+  pagesModel.remove(
+	{ url: req.params.url.trim(),
+    "user._id": req.user._id
+  },
+		function(err, page) {
+			if (err) res.send(err);
+			else {
+        res.redirect('/admin');
+			}
+		}
+	);
+});
 
-router.get('/editPage',requireLogin, function(req, res) {
+
+router.get('/editPage', function(req, res) {
   res.render('editPage'); //views ejs file
 });
 
 
-router.get('/editAccount', requireLogin, function(req, res) {
+router.get('/editAccount', function(req, res) {
   res.render('editAccount'); //views ejs file
 });
 
-router.post('/addPage', requireLogin, function(req, res) {
+router.post('/addPage',  function(req, res) {
 	var newPage = new pagesModel({
 		title: req.body.title,
 		url: req.body.url,
 		content: req.body.content,
-    email: req.session.user.email
+    user: req.user,
+    updateDate: new Date()
+
 	});
 
 	newPage.save(function(err, user) {

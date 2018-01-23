@@ -15,7 +15,7 @@
 	list-style-type: none;
 	padding: 0px;
   	display:inline;
-  
+
 }
 .nav li a {
 	color: #dab3ff;
@@ -81,5 +81,5 @@ footer {
     text-align: center;
     width: 100%;
     bottom: 0;
-    position: absolute;
+    position: relative;
 }

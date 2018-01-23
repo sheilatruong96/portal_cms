@@ -219,13 +219,15 @@ hr {
 
 .auth-error-container{
   color: red;
-}  
+}
 
 
 
 footer {
+    clear: both;
     text-align: center;
     width: 100%;
     bottom: 0;
-    position: absolute;
+    position: relative;
+    z-index: 100;
 }

@@ -20,34 +20,18 @@
 		    <th>Updated</th>
 		    <th>Options</th>
 		  </tr>
-			<% for(var i = 0; i < email.length; i++) { %>
+			<% for(var i = 0; i < user.length; i++) { %>
 		  <tr>
-		    <td class="titleCol"><a href="/<%= email[i].title %>"> <%= email[i].title %> </a></td>
-		    <td class="updated">Jan 8, 2018, 2:50 PM</td>
+		    <td class="titleCol"><a href="/<%= user[i].title %>"> <%= user[i].title %> </a></td>
+				<td class="updated"> <%= user[i].updateDate %> </td>
 		    <td class="options">
-				<button  class="button">Delete</button>
-				<button  class="button">Edit</button>
-				<button  class="button">Visibility</button>
+					<input type="button" class="button" onclick="location.href='/admin/delete/<%= user[i].url%>';" value="Delete" />
+					<input type="button" class="button" onclick="location.href='/admin/editPage';" value="Edit" />
+					<input type="button" class="button" onclick="location.href='/admin/editPage';" value="Visibility" />
+			</form>
 		    </td>
 		  </tr>
 			<% } %>
-		  <!-- <tr>
-		    <td class="titleCol"><a href="#">Template2</a></td>
-		    <td class="updated">Jan 1, 2018, 8:50 AM</td>
-		    <td class="options">
-				<button class="button">Delete</button>
-				<button  class="button">Edit</button>
-				<button class="button">Visibility</button>
-		    </td>
-		  </tr>
-		    <td class="titleCol"><a href="#">Template3</a></td>
-		    <td class="updated">Dec 26, 2017, 3:45 PM</td>
-		    <td class="options">
-				<button class="button">Delete</button>
-				<button  class="button">Edit</button>
-				<button  class="button">Visibility</button>
-		    </td>
-		  </tr> -->
 		</table>
 	</div>
 
