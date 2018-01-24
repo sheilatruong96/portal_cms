@@ -1,4 +1,4 @@
-<% include header %>	
+<% include header %>
 
 <header class="header">
 	<h1>Edit Page</h1>
@@ -8,13 +8,25 @@
 	<form method="POST" action="/admin/addPage">
 		<div class="section">
 			<label id="title" >
-				Title: <input type="text" name="title" placeholder="My Template">
+				Title:
+				<% if (user.title) { %>
+					<input type="text" name="title" value= <%=user.title%> >
+				<%} else { %>
+					<input type="text" name="title" placeholder="My Template">
+				<% } %>
+
 			</label>
 		</div>
 
 		<div class="section">
 			<label id="url">
-				URL: <input type="text" name="url" placeholder="http://www.myTemplate.com">
+				URL:
+				<% if (user.url) { %>
+					<input type="text" name="url" value= "<%=user.title%>" >
+				<%} else { %>
+					<input type="text" name="url" placeholder="http://www.myTemplate.com">
+				<% } %>
+
 			</label>
 		</div>
 
@@ -38,7 +50,13 @@
 
 		<div id="content">
 			<label>
-				Content: <textarea rows="8" cols="50" name="content"placeholder="Welcome to my website!"></textarea>
+				Content:
+				<% if (user.content) { %>
+					<textarea rows="8" cols="50" name="content" value= "" > <%=user.content%> </textarea>
+				<%} else { %>
+					 <textarea rows="8" cols="50" name="content" placeholder="Welcome to my website!"></textarea>
+				<% } %>
+
 			</label>
 		</div>
 
@@ -66,8 +84,7 @@
 
 
 	</form>
-	
+
 </div>
 
 <% include footer %>
-

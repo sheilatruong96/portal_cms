@@ -5,7 +5,9 @@ var pageSchema = mongoose.Schema({
 	url: {type: String, required: true},
 	content: {type: String, required: true},
 	updateDate: {type: Date},
-	user: {type: Object, required: true}
+	user: {type: Object, required: true},
+	visibility: {type: Boolean, required: true},
+	edit: {type: Boolean, required: true}
 	// email: String
 });
 

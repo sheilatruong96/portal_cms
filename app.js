@@ -38,13 +38,13 @@ app.use(session({
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000,
   httpOnly: true,
-  secure: true,
+  // secure: true,
   ephemeral: true
 }));
 
 app.use(function(req, res, next) {
   if (req.session && req.session.user) {
-		
+
     userModel.findOne({ email: req.session.user.email }, function(err, user) {
       if (user) {
         req.user = user.toObject(); //

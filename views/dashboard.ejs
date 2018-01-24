@@ -22,12 +22,17 @@
 		  </tr>
 			<% for(var i = 0; i < user.length; i++) { %>
 		  <tr>
-		    <td class="titleCol"><a href="/<%= user[i].title %>"> <%= user[i].title %> </a></td>
+				<% if (user[i].visibility) { %>
+		    	<td class="titleCol"><a href="/<%= user[i].title %>"> <%= user[i].title %> </a></td>
+				<% } else { %>
+					<td class="titleCol"> <%= user[i].title %> </td>
+
+				<% } %>
 				<td class="updated"> <%= user[i].updateDate %> </td>
 		    <td class="options">
 					<input type="button" class="button" onclick="location.href='/admin/delete/<%= user[i].url%>';" value="Delete" />
-					<input type="button" class="button" onclick="location.href='/admin/editPage';" value="Edit" />
-					<input type="button" class="button" onclick="location.href='/admin/editPage';" value="Visibility" />
+					<input type="button" class="button" onclick="location.href='/admin/editPage/<%= user[i].url %>/<%=user[i].title%>';" value="Edit" />
+					<input type="button" class="button" onclick="location.href='/admin/visibility/<%= user[i].url%>';" value="Visibility" />
 			</form>
 		    </td>
 		  </tr>
