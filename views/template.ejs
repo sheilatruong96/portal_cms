@@ -1,13 +1,36 @@
 <% include headerTemplate %>
 	<!-- Nav Bar -->
-	<nav class="nav">
+
+	<nav>
+	    <ul>
+				<li><a href="/admin">Dashboard</a></li>
+	        <li class="parent"><a href="#">Templates</a>
+	            <ul class="child">
+								<% if(user) {  %>
+										<% for(var i = 0; i < user.length; i++) { %>
+											<% if (user[i].visibility) { %>
+												<li><a href="/<%= user[i].url %>"> <%= user[i].title %> </a></li>
+											<!-- <li><a href="#">Peanuts</a></li>
+											<li><a href="#">Pepper</a></li> -->
+											<% } %>
+										<% } %>
+									<% } %>
+	            </ul>
+	        </li>
+					<li><a href="/admin/logout">Log Out</a></li>
+	    </ul>
+	</nav>
+
+	<div class="nav">
 		<ul>
 			<li><a href="#">Home</a></li>
 			<li><a href="#about">About</a></li>
 			<li><a href="#news">News</a></li>
 			<li><a href="#contact">Contact</a></li>
 		</ul>
-	</nav>
+	</div>
+
+
 
 	<header class="header">
 		<h1> <%= title %> </h1>

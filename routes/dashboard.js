@@ -3,7 +3,6 @@ var router = express.Router();
 var pagesModel = require('../models/page');
 var userModel = require('../models/user');
 
-// fix this
 var auth = require('../utils/auth');
 
 router.use(auth.requireLogin);
@@ -12,38 +11,111 @@ router.get('/', function(req, res) {
   pagesModel.find({"user._id": req.user._id}, function(err, info){
     if (err) return res.send(err);
     if (info) {
+      console.log("this is info", info);
       res.render('dashboard', {
-      user: info
-    });
-  };
-});
+        user: info
+      });
+    };
+  });
+
+
+
 });
 
-router.get('/editPage/:url/:title', function(req, res){
-  pagesModel.findOneAndUpdate({
-    url: req.params.url,
-    "user._id": req.user._id
-  },
-  {
-    $set: {edit: true}
-  },
-  function(err, page) {
-    if (err) res.send(err);
-  }
-);
 
-  pagesModel.findOne({"user._id": req.user._id, url: req.params.url, title: req.params.title.trim()},
+
+router.get('/editPage/:_id', function(req, res){
+  pagesModel.findOne({"user._id": req.user._id, _id: req.params._id},
   function(err, page) {
     if (err) res.send(err);
     if (page) {
       res.render('editPage', {
-        user: page
+        page: page
       });
     }
   }
   );
 });
 
+router.post('/editPage/editExist/:_id', function(req, res){
+  pagesModel.findOneAndUpdate ({
+     "user._id": req.user._id,
+     _id: req.params._id.trim()
+   },
+   {
+     $set: {
+       title: req.body.title,
+       url: req.body.url,
+       content: req.body.content,
+       user: req.user,
+       updateDate: new Date(),
+       visibility: true,
+     }
+   },
+   function(err, page) {
+     if(err){
+       if (err.code === 11000) { //duplicate url
+             res.render("editPage", {
+               page: {
+                 title: req.body.title.trim(),
+                 content: req.body.content.trim(),
+                 url: ''
+               },
+               err: `URL already exists (${req.body.url.trim()}). Try another`
+             })
+       } else {
+          return console.error(err);
+        }
+      }
+     else {
+       res.redirect('/admin');
+     }
+   });
+});
+
+router.get('/addPage', function(req,res){
+  res.render("editPage", {
+    page: {
+      title: '',
+      url: '',
+      content: '',
+      user: '',
+      updateDate: new Date(),
+      visibility: true
+    }
+  });
+});
+
+router.post('/addPage/newPage', function(req, res){
+  var newPage = new pagesModel({
+       title: req.body.title,
+       url: req.body.url,
+       content: req.body.content,
+       user: req.user,
+       updateDate: new Date(),
+       visibility: true,
+     });
+
+     newPage.save(function(err, user) {
+       if(err){
+         if (err.code === 11000) { //duplicate url
+               res.render("editPage", {
+                 page: {
+                   title: req.body.title.trim(),
+                   content: req.body.content.trim(),
+                   url: ''
+                 },
+                 err: `URL already exists (${req.body.url.trim()}). Try another`
+               })
+         } else {
+            return console.error(err);
+          }
+        }
+       else {
+         res.redirect('/admin');
+       }
+     });
+});
 
 
 router.get('/delete/:url', function(req, res) {
@@ -102,9 +174,9 @@ router.get('/visibility/:url', function(req, res){
 
 
 
-router.get('/editPage', function(req, res) {
-  res.render('editPage'); //views ejs file
-});
+// router.get('/editPage', function(req, res) {
+//   res.render('editPage'); //views ejs file
+// });
 
 
 router.get('/editAccount', function(req, res) {
@@ -144,68 +216,10 @@ router.post('/updateAccInfo', function(req, res) {
     res.redirect('/admin');
   }
   );
-
-  req.session.user.email = new_email;
-
 });
 
 
-router.post('/addPage',  function(req, res) {
-  pagesModel.findOneAndUpdate({
-    "user._id": req.user._id,
-    edit: true
-  },
-  {
-    $set: {
-      title: req.body.title,
-      url: req.body.url,
-      content: req.body.content,
-      user: req.user,
-      updateDate: new Date(),
-      visibility: true,
-      edit: false
-    }
-  },
-  function(err, page) {
-    if (err) res.send(err);
 
-    if (!page) {
-      var newPage = new pagesModel({
-        title: req.body.title,
-        url: req.body.url,
-        content: req.body.content,
-        user: req.user,
-        updateDate: new Date(),
-        visibility: true,
-        edit: false
-      });
-
-      newPage.save(function(err, user) {
-        if (err) return console.error(err);
-        res.redirect('/admin');
-      });
-    }
-  }
-);
-
-  res.redirect('/admin');
-
-
-	// var newPage = new pagesModel({
-	// 	title: req.body.title,
-	// 	url: req.body.url,
-	// 	content: req.body.content,
-  //   user: req.user,
-  //   updateDate: new Date(),
-  //   visibility: true,
-  //   edit: false
-	// });
-  //
-	// newPage.save(function(err, user) {
-	// 	if (err) return console.error(err);
-	// 	res.redirect('/admin');
-	// });
-});
 
 router.get('/logout', function(req, res) {
   req.session.reset();

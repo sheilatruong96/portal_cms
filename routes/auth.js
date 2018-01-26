@@ -8,16 +8,27 @@ router.get('/', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
-	var newUser = new userModel({
-		email: req.body.email,
-		password: req.body.password,
-	});
+  userModel.findOne({
+    email: req.body.email,
+  }, function(err, user){
+    if (err) return console.error(err);
+    if (user) {
+      res.render('adminAuth', {regError: 'Email already in use.'});
+    } else {
+      var newUser = new userModel({
+        email: req.body.email,
+        password: req.body.password,
+      });
 
-	newUser.save(function(err, user) {
-		if (err) return console.error(err);
-    req.session.user = user;
-		res.redirect('/admin');
-	});
+      newUser.save(function(err, user) {
+        if (err) return console.error(err);
+        req.session.user = user;
+        res.redirect('/admin');
+      });
+    }
+  }
+)
+
 });
 
 

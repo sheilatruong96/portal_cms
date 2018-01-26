@@ -1,16 +1,45 @@
 <% include header %>
+<!-- Nav Bar -->
+<!-- <nav class="nav">
+	<ul>
+		<li><a href="/admin">Dashboard</a></li>
+		<li><a href="/admin/addPage">Add Page</a></li>
+		<li><a href="/admin/editAccount">Edit Account</a></li>
+		<li><a href="/admin/logout">Log Out</a></li>
+	</ul>
+</nav> -->
+
+<nav>
+		<ul>
+			<li><a href="/admin">Dashboard</a></li>
+				<!-- <li class="parent"><a href="#">Templates</a>
+						<ul class="child">
+								<li><a href="#">Stale Breads</a></li>
+								<li><a href="#">Peanuts</a></li>
+								<li><a href="#">Pepper</a></li>
+						</ul>
+				</li> -->
+				<li><a href="/admin/addPage">Add Page</a></li>
+				<li><a href="/admin/editAccount">Edit Account</a></li>
+				<li><a href="/admin/logout">Log Out</a></li>
+		</ul>
+</nav>
 
 <header class="header">
 	<h1>Edit Page</h1>
 </header>
 
 <div class="container">
-	<form method="POST" action="/admin/addPage">
+		<% if (page._id) { console.log(page._id)%>
+			<form method="POST" action="/admin/editPage/editExist/<%= page._id %>">
+		<% } else { %>
+			<form method="POST" action="/admin/addPage/newPage">
+		<% } %>
 		<div class="section">
 			<label id="title" >
 				Title:
-				<% if (user.title) { %>
-					<input type="text" name="title" value= <%=user.title%> >
+				<% if (page.title) { %>
+					<input type="text" name="title" value= "<%= page.title%>" >
 				<%} else { %>
 					<input type="text" name="title" placeholder="My Template">
 				<% } %>
@@ -20,9 +49,14 @@
 
 		<div class="section">
 			<label id="url">
+				<% if(typeof err !== 'undefined') { %>
+					<div class="err-error-container">
+						<%= err %>
+					</div>
+				<% } %>
 				URL:
-				<% if (user.url) { %>
-					<input type="text" name="url" value= "<%=user.title%>" >
+				<% if (page.url) { %>
+					<input type="text" name="url" value= "<%= page.url%>" >
 				<%} else { %>
 					<input type="text" name="url" placeholder="http://www.myTemplate.com">
 				<% } %>
@@ -51,8 +85,8 @@
 		<div id="content">
 			<label>
 				Content:
-				<% if (user.content) { %>
-					<textarea rows="8" cols="50" name="content" value= "" > <%=user.content%> </textarea>
+				<% if (page.content) { %>
+					<textarea rows="8" cols="50" name="content" value= "" > <%=page.content%> </textarea>
 				<%} else { %>
 					 <textarea rows="8" cols="50" name="content" placeholder="Welcome to my website!"></textarea>
 				<% } %>

@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+  height: 100%;
+}
 * {
     box-sizing: border-box;
 }
@@ -75,7 +79,63 @@ input[type=submit] {
     cursor: pointer;
 }
 
+/* test */
+/* Main Navigation */
+nav {
+    background: #444;
+    width: 100%;
+    margin-bottom: 2%;
+}
 
+nav ul {
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    position: relative;
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding: 10px 0;
+}
+nav ul li:hover {
+    background: #444;
+}
+
+nav ul li a {
+    color: #dab3ff;
+    text-decoration: none;
+    padding: 12px;
+    text-transform: uppercase;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+  nav ul li a:hover {
+    font-style: italic;
+    /* color: #6900cc; */
+    text-decoration: none;
+  }
+
+/* Sub Menu */
+nav ul li.parent ul.child {
+    display: none; /* Hide Sub Menu */
+}
+nav ul li.parent:hover ul.child {
+    display: block; /* Show Sub Menu on Hover */
+    position: absolute;
+    top: 40px;
+    background: #444;
+}
+
+nav ul li.parent ul.child li {
+    width: 9em;
+    padding: 0;
+}
+
+nav ul li.parent ul.child li a {
+    display: block;
+}
+/*  test */
 
 footer {
     text-align: center;

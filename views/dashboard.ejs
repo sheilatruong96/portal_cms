@@ -1,13 +1,36 @@
 <% include header %>
 
 	<!-- Nav Bar -->
-	<nav class="nav">
+	<!-- <nav class="nav">
 		<ul>
-			<li><a href="/admin/editPage">Add Page</a></li>
+			<li><a href="/admin">Dashboard</a></li>
+			<li><a href="/admin/addPage">Add Page</a></li>
 			<li><a href="/admin/editAccount">Edit Account</a></li>
 			<li><a href="/admin/logout">Log Out</a></li>
 		</ul>
+	</nav> -->
+	<nav>
+	    <ul>
+				<li><a href="/admin">Dashboard</a></li>
+	        <li class="parent"><a href="#">Templates</a>
+	            <ul class="child">
+								<% if(user) {  %>
+										<% for(var i = 0; i < user.length; i++) { %>
+											<% if (user[i].visibility) { %>
+			                	<li><a href="/<%= user[i].url %>"> <%= user[i].title %> </a></li>
+			                <!-- <li><a href="#">Peanuts</a></li>
+			                <li><a href="#">Pepper</a></li> -->
+											<% } %>
+										<% } %>
+									<% } %>
+	            </ul>
+	        </li>
+					<li><a href="/admin/addPage">Add Page</a></li>
+					<li><a href="/admin/editAccount">Edit Account</a></li>
+					<li><a href="/admin/logout">Log Out</a></li>
+	    </ul>
 	</nav>
+
 
 	<header class="header">
 		<h1> Table of Pages </h1>
@@ -22,16 +45,11 @@
 		  </tr>
 			<% for(var i = 0; i < user.length; i++) { %>
 		  <tr>
-				<% if (user[i].visibility) { %>
-		    	<td class="titleCol"><a href="/<%= user[i].title %>"> <%= user[i].title %> </a></td>
-				<% } else { %>
-					<td class="titleCol"> <%= user[i].title %> </td>
-
-				<% } %>
+		    <td class="titleCol"><a href="/<%= user[i].url %>"> <%= user[i].title %> </a></td>
 				<td class="updated"> <%= user[i].updateDate %> </td>
 		    <td class="options">
 					<input type="button" class="button" onclick="location.href='/admin/delete/<%= user[i].url%>';" value="Delete" />
-					<input type="button" class="button" onclick="location.href='/admin/editPage/<%= user[i].url %>/<%=user[i].title%>';" value="Edit" />
+					<input type="button" class="button" onclick="location.href='/admin/editPage/<%= user[i]._id%>';" value="Edit" />
 					<input type="button" class="button" onclick="location.href='/admin/visibility/<%= user[i].url%>';" value="Visibility" />
 			</form>
 		    </td>

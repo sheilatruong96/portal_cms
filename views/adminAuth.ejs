@@ -7,6 +7,14 @@
 		<div id="register" class="column">
 			<form method="POST" action="/auth/register">
 				<h2>Create an Account</h2>
+				<% if(typeof regError !== 'undefined') { %>
+					<div class="reg-error-container">
+						<%= regError %>
+					</div>
+				<% } %>
+
+				<br>
+				
 			    Email: <input type="email" name="email" placeholder="user@gmail.com" required>
 			    <br><br>
 			    Password: <input type="password" name="password" placeholder="********" required>
