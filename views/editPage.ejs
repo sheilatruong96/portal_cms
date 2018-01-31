@@ -1,124 +1,71 @@
-<% include header %>
-<!-- Nav Bar -->
-<!-- <nav class="nav">
-	<ul>
-		<li><a href="/admin">Dashboard</a></li>
-		<li><a href="/admin/addPage">Add Page</a></li>
-		<li><a href="/admin/editAccount">Edit Account</a></li>
-		<li><a href="/admin/logout">Log Out</a></li>
-	</ul>
-</nav> -->
-
-<nav>
-		<ul>
-			<li><a href="/admin">Dashboard</a></li>
-				<!-- <li class="parent"><a href="#">Templates</a>
-						<ul class="child">
-								<li><a href="#">Stale Breads</a></li>
-								<li><a href="#">Peanuts</a></li>
-								<li><a href="#">Pepper</a></li>
-						</ul>
-				</li> -->
-				<li><a href="/admin/addPage">Add Page</a></li>
-				<li><a href="/admin/editAccount">Edit Account</a></li>
-				<li><a href="/admin/logout">Log Out</a></li>
-		</ul>
-</nav>
-
 <header class="header">
-	<h1>Edit Page</h1>
+	<h1>Add Page</h1>
 </header>
 
-<div class="container">
-		<% if (page._id) { console.log(page._id)%>
-			<form method="POST" action="/admin/editPage/editExist/<%= page._id %>">
-		<% } else { %>
-			<form method="POST" action="/admin/addPage/newPage">
-		<% } %>
-		<div class="section">
-			<label id="title" >
-				Title:
-				<% if (page.title) { %>
-					<input type="text" name="title" value= "<%= page.title%>" >
-				<%} else { %>
-					<input type="text" name="title" placeholder="My Template">
-				<% } %>
+<form id="addPageForm">
+	<div class="container">
+			<div class="section">
+				<label id="title" >
+					Title:
+						<input type="text" name="title" placeholder="My Template">
+				</label>
+			</div>
 
-			</label>
-		</div>
+			<div class="section">
+				<label id="url">
+					URL:
 
-		<div class="section">
-			<label id="url">
-				<% if(typeof err !== 'undefined') { %>
-					<div class="err-error-container">
-						<%= err %>
-					</div>
-				<% } %>
-				URL:
-				<% if (page.url) { %>
-					<input type="text" name="url" value= "<%= page.url%>" >
-				<%} else { %>
-					<input type="text" name="url" placeholder="http://www.myTemplate.com">
-				<% } %>
+						<input type="text" name="url" placeholder="myTemplate.com">
 
-			</label>
-		</div>
+				</label>
+			</div>
 
-		<div class="section">
-			<label id="template">
-				Template:
-				<select>
-				  <option value="Template1">Template 1</option>
-				  <option value="Template2">Template 2</option>
-				  <option value="Template3">Template 3</option>
-				  <option value="Template4">Template 4</option>
-				</select>
-			</label>
-		</div>
+			<div class="section">
+				<label id="template">
+					Template:
+					<select>
+					  <option value="Template1">Template 1</option>
+					  <option value="Template2">Template 2</option>
+					  <option value="Template3">Template 3</option>
+					  <option value="Template4">Template 4</option>
+					</select>
+				</label>
+			</div>
 
-		<div class="section">
-			<label id="title" >
-				Header: <input type="text" name="header" placeholder="About">
-			</label>
-		</div>
+			<div class="section">
+				<label id="title" >
+					Header: <input type="text" name="header" placeholder="About">
+				</label>
+			</div>
 
-		<div id="content">
-			<label>
-				Content:
-				<% if (page.content) { %>
-					<textarea rows="8" cols="50" name="content" value= "" > <%=page.content%> </textarea>
-				<%} else { %>
-					 <textarea rows="8" cols="50" name="content" placeholder="Welcome to my website!"></textarea>
-				<% } %>
+			<div id="content">
+				<label>
+					Content:
+						 <textarea rows="8" cols="50" name="content" placeholder="Welcome to my website!"></textarea>
 
-			</label>
-		</div>
+				</label>
+			</div>
 
-		<br>
-		<br>
-		<hr>
-		<br>
+			<br>
+			<br>
+			<hr>
+			<br>
 
-		<div class="section">
-			<label id="title" >
-				Header: <input type="text" name="header2" placeholder="News">
-			</label>
-		</div>
+			<div class="section">
+				<label id="title" >
+					Header: <input type="text" name="header2" placeholder="News">
+				</label>
+			</div>
 
-		<div id="content">
-			<label>
-				Content: <textarea rows="8" cols="50" name="content2" placeholder=""></textarea>
-			</label>
-		</div>
-		<br>
+			<div id="content">
+				<label>
+					Content: <textarea rows="8" cols="50" name="content2" placeholder=""></textarea>
+				</label>
+			</div>
+			<br>
 
-		<div>
-			<button id="editPageSave" class="button">Save</button>
-		</div>
-
-
-	</form>
-
-</div>
-
-<% include footer %>
+			<div>
+				<button id="editPageSave" class="button add-page-btn">Save</button>
+			</div>
+	</div>
+</form>

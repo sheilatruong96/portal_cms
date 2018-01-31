@@ -11,7 +11,6 @@ router.get('/', function(req, res) {
   pagesModel.find({"user._id": req.user._id}, function(err, info){
     if (err) return res.send(err);
     if (info) {
-      console.log("this is info", info);
       res.render('dashboard', {
         user: info
       });
@@ -23,15 +22,12 @@ router.get('/', function(req, res) {
 });
 
 
-
 router.get('/editPage/:_id', function(req, res){
   pagesModel.findOne({"user._id": req.user._id, _id: req.params._id},
   function(err, page) {
     if (err) res.send(err);
     if (page) {
-      res.render('editPage', {
-        page: page
-      });
+      res.send(JSON.stringify(page));
     }
   }
   );
@@ -68,7 +64,12 @@ router.post('/editPage/editExist/:_id', function(req, res){
         }
       }
      else {
-       res.redirect('/admin');
+       console.log("in edit exist sending data now!");
+       res.send(JSON.stringify({
+         title: req.body.title,
+         url: req.body.url,
+         _id: req.params._id.trim()
+       }));
      }
    });
 });
@@ -112,59 +113,72 @@ router.post('/addPage/newPage', function(req, res){
           }
         }
        else {
-         res.redirect('/admin');
+         res.send(JSON.stringify(user));
        }
      });
+
 });
 
 
-router.get('/delete/:url', function(req, res) {
+router.delete('/delete/:_id', function(req, res) {
   pagesModel.remove(
-	{ url: req.params.url.trim(),
+	{ _id: req.params._id.trim(),
     "user._id": req.user._id
   },
 		function(err, page) {
-			if (err) res.send(err);
+			if (err) return res.status(500).send(err);
 			else {
-        res.redirect('/admin');
+        res.end();
 			}
 		}
 	);
 });
 
-router.get('/visibility/:url', function(req, res){
+
+
+router.get('/visibility/:_id', function(req, res){
   pagesModel.findOne({
-    url: req.params.url.trim(),
+    _id: req.params._id.trim(),
     "user._id": req.user._id
   },
     function(err, page) {
-      if (err) res.send(err);
+      if (err) return res.status(500).send(err);
       else {
         if (page.visibility) {
             pagesModel.findOneAndUpdate({
-              url: page.url,
+              _id: page._id,
               "user._id": page.user._id
             },
             {
               $set: {visibility: false}
             },
             function(err, page) {
-              if (err) res.send(err);
-              res.redirect('/admin');
+              if (err) return res.status(500).send(err);
+              res.send(JSON.stringify({
+                "vis": false,
+                "url": page.url,
+                "title": page.title,
+                "_id": page._id
+              }));
             }
           );
         }
         else {
             pagesModel.findOneAndUpdate({
-              url: page.url,
+              _id: page._id,
               "user._id": page.user._id
             },
             {
               $set: {visibility: true}
             },
             function(err, page) {
-              if (err) res.send(err);
-              res.redirect('/admin');
+              if (err) return res.status(500).send(err);
+              res.send(JSON.stringify({
+                "vis": true,
+                "url": page.url,
+                "title": page.title,
+                "_id": page._id
+              }));
             }
           );
         }

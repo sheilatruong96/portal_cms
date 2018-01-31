@@ -13,11 +13,7 @@ router.get('/:page', function(req, res) {
 	{ url: req.params.page.trim()},
 		function(err, page) {
 			if (err) res.send(err);
-			if (page.visibility) {
-				// res.render('template', {
-				// 	title: page.title,
-				// 	content: page.content
-				// });
+			if (page && page.visibility) {
 				pagesModel.find({"user._id": req.user._id}, function(err, info){
 					if (err) return res.send(err);
 					if (info) {
