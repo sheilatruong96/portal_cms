@@ -20,7 +20,9 @@ router.get('/:page', function(req, res) {
 						res.render('template', {
 							user: info,
 							title: page.title,
-							content: page.content
+							content: page.content,
+							_id: page._id,
+							url: page.url
 						});
 					};
 				});
@@ -29,8 +31,6 @@ router.get('/:page', function(req, res) {
 			}
 		}
 	);
-
-
 });
 
 router.get('/', function(req, res) {

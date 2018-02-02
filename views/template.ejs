@@ -10,8 +10,6 @@
 										<% for(var i = 0; i < user.length; i++) { %>
 											<% if (user[i].visibility) { %>
 												<li><a href="/<%= user[i].url %>"> <%= user[i].title %> </a></li>
-											<!-- <li><a href="#">Peanuts</a></li>
-											<li><a href="#">Pepper</a></li> -->
 											<% } %>
 										<% } %>
 									<% } %>
@@ -33,13 +31,17 @@
 
 
 	<header class="header">
-		<h1> <%= title %> </h1>
+		<div data-editable data-name="title">
+			<%- title %>
+		</div>
 	</header>
 
 
 	<div id="about">
 		<h3> About </h3>
-		 <%= content %>
+		<div data-editable data-name="content">
+		 	<%- content %>
+		</div>
 	</div>
 
 
@@ -75,6 +77,9 @@
 
 		</form>
 	</div>
-
+<script>
+	var pageId = "<%= _id %>";
+	var url = "<%= url %>"
+</script>
 
 <% include footer %>

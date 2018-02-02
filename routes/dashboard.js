@@ -2,8 +2,11 @@ var express = require('express');
 var router = express.Router();
 var pagesModel = require('../models/page');
 var userModel = require('../models/user');
+bodyParser = require('body-parser');
+
 
 var auth = require('../utils/auth');
+
 
 router.use(auth.requireLogin);
 
@@ -34,19 +37,21 @@ router.get('/editPage/:_id', function(req, res){
 });
 
 router.post('/editPage/editExist/:_id', function(req, res){
+  newData = {
+    "updateDate": new Date(),
+    "visibility": true,
+    "user": req.user,
+  };
+  if (req.body.title) newData["title"] = req.body.title;
+  if (req.body.url) newData["url"] = req.body.url;
+  if (req.body.content) newData["content"] = req.body.content;
+
   pagesModel.findOneAndUpdate ({
      "user._id": req.user._id,
      _id: req.params._id.trim()
    },
    {
-     $set: {
-       title: req.body.title,
-       url: req.body.url,
-       content: req.body.content,
-       user: req.user,
-       updateDate: new Date(),
-       visibility: true,
-     }
+     $set: newData
    },
    function(err, page) {
      if(err){
@@ -64,8 +69,12 @@ router.post('/editPage/editExist/:_id', function(req, res){
         }
       }
      else {
-       console.log("in edit exist sending data now!");
-       res.send(JSON.stringify({
+       // res.send(JSON.stringify({
+       //   title: req.body.title,
+       //   url: req.body.url,
+       //   _id: req.params._id.trim()
+       // }));
+       res.status(200).send(JSON.stringify({
          title: req.body.title,
          url: req.body.url,
          _id: req.params._id.trim()
@@ -96,14 +105,13 @@ router.post('/addPage/newPage', function(req, res){
        updateDate: new Date(),
        visibility: true,
      });
-
      newPage.save(function(err, user) {
        if(err){
          if (err.code === 11000) { //duplicate url
                res.render("editPage", {
                  page: {
                    title: req.body.title.trim(),
-                   content: req.body.content.trim(),
+                   content: req.body.content,
                    url: ''
                  },
                  err: `URL already exists (${req.body.url.trim()}). Try another`
