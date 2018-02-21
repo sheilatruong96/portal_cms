@@ -6,8 +6,6 @@ bodyParser = require('body-parser');
 
 
 var auth = require('../utils/auth');
-
-
 router.use(auth.requireLogin);
 
 router.get('/', function(req, res) {
@@ -56,28 +54,29 @@ router.post('/editPage/editExist/:_id', function(req, res){
    function(err, page) {
      if(err){
        if (err.code === 11000) { //duplicate url
-             res.render("editPage", {
-               page: {
-                 title: req.body.title.trim(),
-                 content: req.body.content.trim(),
-                 url: ''
-               },
-               err: `URL already exists (${req.body.url.trim()}). Try another`
-             })
+      //        res.render("editPage", {
+      //          page: {
+      //            title: req.body.title.trim(),
+      //            content: req.body.content.trim(),
+      //            url: ''
+      //          },
+      //          err: `URL already exists (${req.body.url.trim()}). Try another`
+      //        })
+      var err = {
+        err: `URL already exists (${req.body.url.trim()}). Try another`,
+        url: req.body.url
+      };
+      res.send(JSON.stringify(err));
        } else {
           return console.error(err);
         }
       }
      else {
-       // res.send(JSON.stringify({
-       //   title: req.body.title,
-       //   url: req.body.url,
-       //   _id: req.params._id.trim()
-       // }));
        res.status(200).send(JSON.stringify({
-         title: req.body.title,
+         title: page.title,
          url: req.body.url,
-         _id: req.params._id.trim()
+         _id: req.params._id.trim(),
+         updateDate: page.updateDate
        }));
      }
    });
@@ -108,14 +107,20 @@ router.post('/addPage/newPage', function(req, res){
      newPage.save(function(err, user) {
        if(err){
          if (err.code === 11000) { //duplicate url
-               res.render("editPage", {
-                 page: {
-                   title: req.body.title.trim(),
-                   content: req.body.content,
-                   url: ''
-                 },
-                 err: `URL already exists (${req.body.url.trim()}). Try another`
-               })
+               // res.render("editPage", {
+               //   page: {
+               //     title: req.body.title.trim(),
+               //     content: req.body.content,
+               //     url: ''
+               //   },
+               //   err: `URL already exists (${req.body.url.trim()}). Try another`
+               // })
+
+                var err = {
+                  err: `URL already exists (${req.body.url.trim()}). Try another`,
+                  url: req.body.url
+                };
+                res.send(JSON.stringify(err));
          } else {
             return console.error(err);
           }

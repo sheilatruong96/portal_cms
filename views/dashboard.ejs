@@ -7,7 +7,7 @@
 								<% if(user) {  %>
 										<% for(var i = 0; i < user.length; i++) { %>
 											<% if (user[i].visibility) { %>
-			                	<li id="<%= user[i]._id %>"><a href="/<%= user[i].url %>"> <%= user[i].title %> </a></li>
+			                	<li id="<%= user[i]._id %>"><a href="/<%= user[i].url %>"> <%= user[i].title.replace(/<{1}[^<>]{1,}>{1}/g,"") %> </a></li>
 											<% } %>
 										<% } %>
 									<% } %>
@@ -32,8 +32,8 @@
 		    <th>Options</th>
 		  </tr>
 			<% for(var i = 0; i < user.length; i++) { %>
-		  <tr>
-		    <td class="titleCol"><a href="/<%= user[i].url %>" id="<%= user[i]._id %>"> <%= user[i].title %> </a></td>
+		  <tr class= "<%= user[i]._id %>">
+		    <td class="titleCol"><a href="/<%= user[i].url %>" id="<%= user[i]._id %>"> <%= user[i].title.replace(/<{1}[^<>]{1,}>{1}/g,"") %> </a></td>
 				<td class="updated"> <%= user[i].updateDate %> </td>
 		    <td class="options">
 					<input type="button" class="button btn-delete" data-page-id="<%= user[i]._id %>" value="Delete" />
@@ -68,16 +68,14 @@
 							</label>
 						</div>
 
-						<% if(typeof err !== 'undefined') { %>
-							<div class="err-error-container">
-								<%= err %>
+							<div class="err-error-container" style="display:none">
+
 							</div>
-						<% } %>
 
 						<div class="section">
 							<label id="url">
 								URL:
-									<input type="text" name="url" placeholder="myTemplate.com">
+									<input type="url" name="url" placeholder="myTemplate.com">
 							</label>
 						</div>
 
@@ -127,18 +125,21 @@
 
 			<form id="editPageForm">
 				<div class="container">
-						<div class="section">
+						<!-- <div class="section">
 							<label class="title" >
 								Title:
 									<input type="text" name="title" placeholder="My Template">
 							</label>
+						</div> -->
+						<div class="err-error-container" style="display:none">
+
 						</div>
 
 						<div class="section">
 							<label id="url">
 								URL:
 
-									<input type="text" name="url" placeholder="myTemplate.com">
+									<input type="url" name="url" placeholder="myTemplate.com">
 
 							</label>
 						</div>
@@ -155,19 +156,19 @@
 							</label>
 						</div>
 
-						<div class="section">
+						<!-- <div class="section">
 							<label class="header1" >
 								Header: <input type="text" name="header" placeholder="About">
 							</label>
-						</div>
+						</div> -->
 
-						<div id="content">
+						<!-- <div id="content">
 							<label>
 								Content:
 									 <textarea rows="8" cols="50" name="content" placeholder="Welcome to my website!"></textarea>
 
 							</label>
-						</div>
+						</div> -->
 
 						<br>
 						<br>
@@ -215,29 +216,66 @@
 			event.preventDefault();
 		});
 
+		$('.edit-page-btn-save').on('click', function(event) {
+			var button = $(this);
+			var pageId = button.attr('data-page-id');
+			$.ajax({
+				method: 'POST',
+				url: `/admin/editPage/editExist/${pageId}`,
+				data: $('#editPageForm').serialize(),
+				dataType: "json",
+				success: function(data) {
+					if (data.err) {
+						$(".err-error-container").html(data.err);
+						$(".err-error-container").css('display', 'block');
+
+					}
+					else {
+						console.log(data.updateDate);
+						var editModal = $('#editModal')[0];
+						var title = (data.title).replace(/<{1}[^<>]{1,}>{1}/g,"");
+						$("#"+data._id).replaceWith("<a href='/" + data.url + "' id='"+ data._id + "'>" + title  + "</a>" );
+						$('#table-listener .' + data._id).replaceWith('<tr><td class="titleCol"><a href="/' + data.url +'" id="' + data._id + '">' +  title + '</a></td><td class="updated">' + data.updateDate + '</td><td class="options"><input type="button" class="button btn-delete" data-page-id="' + data._id + '" value="Delete" /><input type="button" class="button btn-edit" data-page-id="' + data._id + '" value="Edit" /><input type="button" class="button btn-vis" data-page-id="' + data._id +'" value="Visible" /></td></tr>');
+						editModal.style.display = "none";
+
+						$('#editPageForm')[0].reset();
+						$('#addPageForm')[0].reset();
+					}
+				}
+			})
+			event.preventDefault();
+		});
+
 		$('.add-page-btn-save').on('click', function(event) {
 			$.ajax({
 				method: 'POST',
 				url: '/admin/addPage/newPage',
 				data: $('#addPageForm').serialize()+'&content=' + quill.container.firstChild.innerHTML,
-				dataType: "json"
-			})
-			.done(function(response){
-				var addPage = $('#myModal')[0];
-				$('.table table').append('<tr><td class="titleCol"><a href="/' + response.url +'" id="' + response._id + '">' +  response.title + '</a></td><td class="updated">' + response.updateDate + '</td><td class="options"><input type="button" class="button btn-delete" data-page-id="' + response._id + '" value="Delete" /><input type="button" class="button btn-edit" data-page-id="' + response._id + '" value="Edit" /><input type="button" class="button btn-vis" data-page-id="' + response._id +'" value="Visible" /></td></tr>');
+				dataType: "json",
+				success: function(data) {
+					if (data.err) {
+						$(".err-error-container").html(data.err);
+						$(".err-error-container").css('display', 'block');
 
-				addPage.style.display = "none";
-				$('#addPageForm')[0].reset();
-				$('#editPageForm')[0].reset();
+					}
+					else {
+						var addPage = $('#myModal')[0];
+						var title = data.title.replace(/<{1}[^<>]{1,}>{1}/g,"");
+						$('.table table').append('<tr><td class="titleCol"><a href="/' + data.url +'" id="' + data._id + '">' +  title  + '</a></td><td class="updated">' + data.updateDate + '</td><td class="options"><input type="button" class="button btn-delete" data-page-id="' + data._id + '" value="Delete" /><input type="button" class="button btn-edit" data-page-id="' + data._id + '" value="Edit" /><input type="button" class="button btn-vis" data-page-id="' + data._id +'" value="Visible" /></td></tr>');
+						$('.child').append('<li id="'+ data._id + '"><a href="/'+ data.url +'">' + title  + '</a></li>');
 
-			})
-			.fail(function(response){
-				console.log(response);
+
+						addPage.style.display = "none";
+						$('#addPageForm')[0].reset();
+						$('#editPageForm')[0].reset();
+					}
+				}
 			})
 			event.preventDefault();
 		});
 
 		$('#add-page-btn').on('click', function(event){
+			$(".err-error-container").css('display', 'none');
 
 			var modal = $('#myModal')[0];
 
@@ -264,27 +302,7 @@
 			}
 		});
 
-		$('.edit-page-btn-save').on('click', function(event) {
-			var button = $(this);
-			var pageId = button.attr('data-page-id');
-			$.ajax({
-				method: 'POST',
-				url: `/admin/editPage/editExist/${pageId}`,
-				data: $('#editPageForm').serialize(),
-				dataType: "json"
-			})
-			.done(function(response){
-				var editModal = $('#editModal')[0];
-				$("#"+response._id).replaceWith("<a href='/" + response.url + "' id='"+ response._id + "'>" + response.title + "</a>" );
-				editModal.style.display = "none";
-				$('#editPageForm')[0].reset();
-				$('#addPageForm')[0].reset();
-			})
-			.fail(function(response){
-				console.log(response);
-			})
-			event.preventDefault();
-		});
+
 
 		$('#table-listener').on('click','.btn-delete', function(event){
 			var button = $(this);
@@ -295,6 +313,9 @@
 			})
 			.done(function(response){
 				button.parent().parent().remove();
+
+				$('.child #' + pageId).remove();
+
 			})
 		});
 
@@ -307,9 +328,10 @@
 				dataType: "json"
 			})
 			.done(function(response){
+				var title = response.title.replace(/<{1}[^<>]{1,}>{1}/g,"");
 				if (response.vis) {
 					button.attr("value", "Visible");
-					$('.child').append('<li id="'+ response._id + '"><a href="/'+ response.url +'">' + response.title + '</a></li>');
+					$('.child').append('<li id="'+ response._id + '"><a href="/'+ response.url +'">' + title + '</a></li>');
 				} else {
 					button.attr("value", "Not Visible");
 					$('.child #' + response._id ).remove();
@@ -318,6 +340,8 @@
 		});
 
 		$('#table-listener').on('click', '.btn-edit', function(event) {
+			$(".err-error-container").css('display', 'none');
+
 			var button = $(this);
 			var pageId = button.attr('data-page-id');
 

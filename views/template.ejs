@@ -9,7 +9,7 @@
 								<% if(user) {  %>
 										<% for(var i = 0; i < user.length; i++) { %>
 											<% if (user[i].visibility) { %>
-												<li><a href="/<%= user[i].url %>"> <%= user[i].title %> </a></li>
+												<li><a href="/<%= user[i].url %>"> <%= user[i].title.replace(/<{1}[^<>]{1,}>{1}/g,"") %> </a></li>
 											<% } %>
 										<% } %>
 									<% } %>

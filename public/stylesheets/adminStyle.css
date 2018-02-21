@@ -238,6 +238,9 @@ hr {
 .auth-error-container, .err-error-container, .reg-err-container{
   color: red;
 }
+.err-error-container {
+  display: none;
+}
 
 
 
