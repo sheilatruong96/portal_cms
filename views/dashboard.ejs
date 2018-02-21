@@ -1,0 +1,396 @@
+<% include header %>
+	<nav>
+	    <ul>
+				<li><a href="/admin">Dashboard</a></li>
+	        <li class="parent"><a href="#">Templates</a>
+	            <ul class="child">
+								<% if(user) {  %>
+										<% for(var i = 0; i < user.length; i++) { %>
+											<% if (user[i].visibility) { %>
+			                	<li id="<%= user[i]._id %>"><a href="/<%= user[i].url %>"> <%= user[i].title.replace(/<{1}[^<>]{1,}>{1}/g,"") %> </a></li>
+											<% } %>
+										<% } %>
+									<% } %>
+	            </ul>
+	        </li>
+					<li><a href="#" id="add-page-btn">Add Page</a></li>
+					<li><a href="/admin/editAccount">Edit Account</a></li>
+					<li><a href="/admin/logout">Log Out</a></li>
+	    </ul>
+	</nav>
+
+
+	<header class="header">
+		<h1> Table of Pages </h1>
+	</header>
+
+	<div class="table">
+		<table id="table-listener">
+		  <tr>
+		    <th>Title</th>
+		    <th>Updated</th>
+		    <th>Options</th>
+		  </tr>
+			<% for(var i = 0; i < user.length; i++) { %>
+		  <tr class= "<%= user[i]._id %>">
+		    <td class="titleCol"><a href="/<%= user[i].url %>" id="<%= user[i]._id %>"> <%= user[i].title.replace(/<{1}[^<>]{1,}>{1}/g,"") %> </a></td>
+				<td class="updated"> <%= user[i].updateDate %> </td>
+		    <td class="options">
+					<input type="button" class="button btn-delete" data-page-id="<%= user[i]._id %>" value="Delete" />
+					<input type="button" class="button btn-edit" data-page-id="<%= user[i]._id %>" value="Edit" />
+					<% if(user[i].visibility) { %>
+						<input type="button" class="button btn-vis" data-page-id="<%= user[i]._id %>" value="Visible" />
+					<% } else {%>
+						<input type="button" class="button btn-vis" data-page-id="<%= user[i]._id %>" value="Not Visible" />
+					<% } %>
+				</td>
+		  </tr>
+			<% } %>
+		</table>
+	</div>
+
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+	  <!-- Modal content -->
+	  <div class="modal-content">
+	    <span class="close">&times;</span>
+			<header class="header">
+				<h1>Add Page</h1>
+			</header>
+
+			<form id="addPageForm">
+				<div class="container">
+						<div class="section">
+							<label class="title" >
+								Title:
+									<input type="text" name="title" placeholder="My Template">
+							</label>
+						</div>
+
+							<div class="err-error-container" style="display:none">
+
+							</div>
+
+						<div class="section">
+							<label id="url">
+								URL:
+									<input type="url" name="url" placeholder="myTemplate.com">
+							</label>
+						</div>
+
+						<div class="section">
+							<label id="template">
+								Template:
+								<select>
+									<option value="Template1">Template 1</option>
+									<option value="Template2">Template 2</option>
+									<option value="Template3">Template 3</option>
+									<option value="Template4">Template 4</option>
+								</select>
+							</label>
+						</div>
+
+						<div class="section">
+							<label class="header1" >
+								Header: <input type="text" name="header" placeholder="About">
+							</label>
+						</div>
+
+						<div id="editor-container">
+						</div>
+
+
+						<br>
+						<br>
+
+						<div>
+							<button id="addPageSave" class="button add-page-btn-save">Save</button>
+							<button id="addPageCancel" class="button">Cancel</button>
+						</div>
+				</div>
+			</form>
+	  </div>
+	</div>
+
+	<!-- The Modal -->
+	<div id="editModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close-modal">&times;</span>
+			<header class="header">
+				<h1>Edit Page</h1>
+			</header>
+
+			<form id="editPageForm">
+				<div class="container">
+						<!-- <div class="section">
+							<label class="title" >
+								Title:
+									<input type="text" name="title" placeholder="My Template">
+							</label>
+						</div> -->
+						<div class="err-error-container" style="display:none">
+
+						</div>
+
+						<div class="section">
+							<label id="url">
+								URL:
+
+									<input type="url" name="url" placeholder="myTemplate.com">
+
+							</label>
+						</div>
+
+						<div class="section">
+							<label id="template">
+								Template:
+								<select>
+								  <option value="Template1">Template 1</option>
+								  <option value="Template2">Template 2</option>
+								  <option value="Template3">Template 3</option>
+								  <option value="Template4">Template 4</option>
+								</select>
+							</label>
+						</div>
+
+						<!-- <div class="section">
+							<label class="header1" >
+								Header: <input type="text" name="header" placeholder="About">
+							</label>
+						</div> -->
+
+						<!-- <div id="content">
+							<label>
+								Content:
+									 <textarea rows="8" cols="50" name="content" placeholder="Welcome to my website!"></textarea>
+
+							</label>
+						</div> -->
+
+						<br>
+						<br>
+
+						<div>
+							<button id="editPageSave" data-page-id="" class="button edit-page-btn-save">Save</button>
+							<button id="editPageCancel" class="button">Cancel</button>
+						</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+<script>
+
+	$(function() {
+		var quill = new Quill('#editor-container', {
+			modules: {
+				toolbar: [
+					[{ header: [1, 2, false] }],
+					['bold', 'italic', 'underline'],
+					['image', 'code-block']
+				]
+			},
+			placeholder: 'Compose an epic...',
+			theme: 'snow'
+		});
+
+		$('#addPageCancel').on('click', function(event){
+			var addPage = $('#myModal')[0];
+			addPage.style.display="none";
+			$('#addPageForm')[0].reset();
+			$('#editPageForm')[0].reset();
+
+			event.preventDefault();
+		});
+
+		$('#editPageCancel').on('click', function(event){
+			var editModal = $('#editModal')[0];
+			editModal.style.display="none";
+			$('#editPageForm')[0].reset();
+			$('#addPageForm')[0].reset();
+
+			event.preventDefault();
+		});
+
+		$('.edit-page-btn-save').on('click', function(event) {
+			var button = $(this);
+			var pageId = button.attr('data-page-id');
+			$.ajax({
+				method: 'POST',
+				url: `/admin/editPage/editExist/${pageId}`,
+				data: $('#editPageForm').serialize(),
+				dataType: "json",
+				success: function(data) {
+					if (data.err) {
+						$(".err-error-container").html(data.err);
+						$(".err-error-container").css('display', 'block');
+
+					}
+					else {
+						console.log(data.updateDate);
+						var editModal = $('#editModal')[0];
+						var title = (data.title).replace(/<{1}[^<>]{1,}>{1}/g,"");
+						$("#"+data._id).replaceWith("<a href='/" + data.url + "' id='"+ data._id + "'>" + title  + "</a>" );
+						$('#table-listener .' + data._id).replaceWith('<tr><td class="titleCol"><a href="/' + data.url +'" id="' + data._id + '">' +  title + '</a></td><td class="updated">' + data.updateDate + '</td><td class="options"><input type="button" class="button btn-delete" data-page-id="' + data._id + '" value="Delete" /><input type="button" class="button btn-edit" data-page-id="' + data._id + '" value="Edit" /><input type="button" class="button btn-vis" data-page-id="' + data._id +'" value="Visible" /></td></tr>');
+						editModal.style.display = "none";
+
+						$('#editPageForm')[0].reset();
+						$('#addPageForm')[0].reset();
+					}
+				}
+			})
+			event.preventDefault();
+		});
+
+		$('.add-page-btn-save').on('click', function(event) {
+			$.ajax({
+				method: 'POST',
+				url: '/admin/addPage/newPage',
+				data: $('#addPageForm').serialize()+'&content=' + quill.container.firstChild.innerHTML,
+				dataType: "json",
+				success: function(data) {
+					if (data.err) {
+						$(".err-error-container").html(data.err);
+						$(".err-error-container").css('display', 'block');
+
+					}
+					else {
+						var addPage = $('#myModal')[0];
+						var title = data.title.replace(/<{1}[^<>]{1,}>{1}/g,"");
+						$('.table table').append('<tr><td class="titleCol"><a href="/' + data.url +'" id="' + data._id + '">' +  title  + '</a></td><td class="updated">' + data.updateDate + '</td><td class="options"><input type="button" class="button btn-delete" data-page-id="' + data._id + '" value="Delete" /><input type="button" class="button btn-edit" data-page-id="' + data._id + '" value="Edit" /><input type="button" class="button btn-vis" data-page-id="' + data._id +'" value="Visible" /></td></tr>');
+						$('.child').append('<li id="'+ data._id + '"><a href="/'+ data.url +'">' + title  + '</a></li>');
+
+
+						addPage.style.display = "none";
+						$('#addPageForm')[0].reset();
+						$('#editPageForm')[0].reset();
+					}
+				}
+			})
+			event.preventDefault();
+		});
+
+		$('#add-page-btn').on('click', function(event){
+			$(".err-error-container").css('display', 'none');
+
+			var modal = $('#myModal')[0];
+
+			var btn = $('#add-page-btn-save')[0];
+
+			var span = $('.close')[0];
+
+			modal.style.display = "block";
+
+			span.onclick = function() {
+					modal.style.display = "none";
+					$('#addPageForm')[0].reset();
+					$('#editPageForm')[0].reset();
+
+
+			}
+
+			window.onclick = function(event) {
+					if (event.target == modal) {
+							modal.style.display = "none";
+							$('#addPageForm')[0].reset();
+							$('#editPageForm')[0].reset();
+					}
+			}
+		});
+
+
+
+		$('#table-listener').on('click','.btn-delete', function(event){
+			var button = $(this);
+			var pageId = button.attr('data-page-id');
+			$.ajax({
+				method: 'DELETE',
+				url: `/admin/delete/${pageId}`
+			})
+			.done(function(response){
+				button.parent().parent().remove();
+
+				$('.child #' + pageId).remove();
+
+			})
+		});
+
+		$('#table-listener').on('click', '.btn-vis',function(event){
+			var button = $(this);
+			var pageId = button.attr('data-page-id');
+			$.ajax({
+				method: 'GET',
+				url: `/admin/visibility/${pageId}`,
+				dataType: "json"
+			})
+			.done(function(response){
+				var title = response.title.replace(/<{1}[^<>]{1,}>{1}/g,"");
+				if (response.vis) {
+					button.attr("value", "Visible");
+					$('.child').append('<li id="'+ response._id + '"><a href="/'+ response.url +'">' + title + '</a></li>');
+				} else {
+					button.attr("value", "Not Visible");
+					$('.child #' + response._id ).remove();
+				}
+			})
+		});
+
+		$('#table-listener').on('click', '.btn-edit', function(event) {
+			$(".err-error-container").css('display', 'none');
+
+			var button = $(this);
+			var pageId = button.attr('data-page-id');
+
+			$.ajax({
+				method: 'GET',
+				url: `/admin/editPage/${pageId}`,
+				dataType: "json"
+			})
+			.done(function(response){
+				$('.title input').val(response.title);
+				$('#url input').val(response.url);
+				$('#editPageSave').attr('data-page-id', response._id);
+
+
+				// Get the modal
+				var editModal = $('#editModal')[0];
+
+				// Get the <span> element that closes the modal
+				var spanEdit = $('.close-modal')[0];
+
+				// When the user clicks the button, open the modal
+				editModal.style.display = "block";
+
+				// When the user clicks on <span> (x), close the modal
+				spanEdit.onclick = function() {
+						editModal.style.display = "none";
+						$('#editPageForm')[0].reset();
+						$('#addPageForm')[0].reset();
+				}
+
+				// When the user clicks anywhere outside of the modal, close it
+				window.onclick = function(event) {
+						if (event.target == editModal) {
+								editModal.style.display = "none";
+								$('#editPageForm')[0].reset();
+								$('#addPageForm')[0].reset();
+
+						}
+				}
+			})
+			.fail(function(response){
+				console.log(response);
+			})
+			event.preventDefault();
+		});
+	});
+
+
+
+</script>
+
+<% include footer %>

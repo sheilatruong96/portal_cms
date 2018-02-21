@@ -1,0 +1,85 @@
+<% include headerTemplate %>
+	<!-- Nav Bar -->
+
+	<nav>
+	    <ul>
+				<li><a href="/admin">Dashboard</a></li>
+	        <li class="parent"><a href="#">Templates</a>
+	            <ul class="child">
+								<% if(user) {  %>
+										<% for(var i = 0; i < user.length; i++) { %>
+											<% if (user[i].visibility) { %>
+												<li><a href="/<%= user[i].url %>"> <%= user[i].title.replace(/<{1}[^<>]{1,}>{1}/g,"") %> </a></li>
+											<% } %>
+										<% } %>
+									<% } %>
+	            </ul>
+	        </li>
+					<li><a href="/admin/logout">Log Out</a></li>
+	    </ul>
+	</nav>
+
+	<div class="nav">
+		<ul>
+			<li><a href="#">Home</a></li>
+			<li><a href="#about">About</a></li>
+			<li><a href="#news">News</a></li>
+			<li><a href="#contact">Contact</a></li>
+		</ul>
+	</div>
+
+
+
+	<header class="header">
+		<div data-editable data-name="title">
+			<%- title %>
+		</div>
+	</header>
+
+
+	<div id="about">
+		<h3> About </h3>
+		<div data-editable data-name="content">
+		 	<%- content %>
+		</div>
+	</div>
+
+
+	<div id="news">
+		<h3> News </h3>
+		<div class="row">
+			<div class="column">
+				<p> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </p>
+			</div>
+			<div class="column">
+				<p> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </p>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="contact">
+		<h3>Contact Form</h3>
+
+		<form action="#">
+		<label for="fname">First Name</label>
+		<input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+		<label for="lname">Last Name</label>
+		<input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+		<label for="subject">Subject</label>
+		<textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+
+		<div class="button">
+			<input type="submit" value="Submit">
+		</div>
+
+		</form>
+	</div>
+<script>
+	var pageId = "<%= _id %>";
+	var url = "<%= url %>"
+</script>
+
+<% include footer %>

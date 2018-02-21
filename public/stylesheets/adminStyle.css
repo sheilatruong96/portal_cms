@@ -1,0 +1,363 @@
+body {
+    background-color:#f1f1f1;
+    margin: 0;
+    height: 100%;
+}
+
+
+
+#register {
+    border-right: 1px solid black;
+}
+
+#register form {
+    color: #dab3ff;
+}
+
+#register h2 {
+    color: black;
+}
+
+#register input[type=text]:focus, input[type=password]:focus {
+    background-color: #f1f1f1;
+    border: 3px solid #555;
+}
+
+#register a {
+    font-size: 12px;
+}
+
+
+#login form {
+    color: #dab3ff;
+}
+
+#login h2 {
+    color: black;
+}
+
+#login input[type=text]:focus, input[type=password]:focus {
+    background-color: #f1f1f1;
+    border: 3px solid #555;
+}
+
+#login a {
+    font-size: 12px;
+}
+
+.row {
+    text-align: center;
+    padding-top: 5%;
+}
+.column {
+    float: left;
+    width: 49%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.header {
+    text-align:center;
+}
+
+.edit {
+    text-align: center;
+}
+
+.edit form {
+    color: #dab3ff;
+}
+
+.edit h2 {
+    color: black;
+}
+
+.edit input[type=text]:focus, input[type=password]:focus {
+    background-color: #f1f1f1;
+    border: 3px solid #555;
+}
+
+.edit a {
+    font-size: 12px;
+}
+
+
+.container {
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.container label {
+    text-align: left;
+    font-size: 20px;
+    vertical-align: top;
+}
+
+.title input, .header1 input{
+    font-size: 20px;
+    width: 85%;
+    float: right;
+}
+
+
+#content textarea {
+    resize: none;
+    float: right;
+    width: 85%;
+}
+
+#url, #url input{
+    font-size: 20px;
+}
+
+#url input {
+    float: right;
+    width: 85%;
+}
+
+#template {
+    height: 100px;
+}
+
+#template select {
+    float:right;
+    width: 85%;
+}
+
+.section, #content {
+    padding-bottom: 10%;
+}
+
+#addPageSave, #editPageSave {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    float: right;
+}
+
+#addPageCancel, #editPageCancel {
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    float: left;
+}
+
+hr {
+    opacity: 0.5;
+}
+
+
+
+
+
+
+.nav {
+    width: 100%;
+}
+
+.nav ul {
+    padding: 0px;
+    margin: 0px;
+    text-align: right;
+}
+.nav li {
+    list-style-type: none;
+    padding: 0px;
+    display:inline;
+
+}
+.nav li a {
+    color: #dab3ff;
+    text-transform: uppercase;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    padding: 8px;
+}
+
+.nav li a:hover:not(.active) {
+    font-style: italic;
+    color: #6900cc;
+}
+
+.table {
+    text-align: center;
+}
+.table table {
+    width: 80%;
+    margin: 1em auto;
+}
+.table table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.table th, td {
+    padding: 10px;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+
+.titleCol a {
+    text-decoration: none;
+    color: #aa80ff;
+}
+
+
+.options .button {
+    background-color: transparent;
+    border-color: #aa80ff;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.auth-error-container, .err-error-container, .reg-err-container{
+  color: red;
+}
+.err-error-container {
+  display: none;
+}
+
+
+
+/* test */
+/* Main Navigation */
+nav {
+    background: #444;
+    width: 100%;
+}
+
+nav ul {
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    position: relative;
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding: 10px 0;
+}
+nav ul li:hover {
+    background: #444;
+}
+
+nav ul li a {
+    color: #dab3ff;
+    text-decoration: none;
+    padding: 12px;
+    /* text-transform: uppercase; */
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+  nav ul li a:hover {
+    font-style: italic;
+    /* color: #6900cc; */
+    text-decoration: none;
+  }
+
+/* Sub Menu */
+nav ul li.parent ul.child {
+    display: none; /* Hide Sub Menu */
+}
+nav ul li.parent:hover ul.child {
+    display: block; /* Show Sub Menu on Hover */
+    position: absolute;
+    top: 40px;
+    background: #444;
+}
+
+nav ul li.parent ul.child li {
+    width: 9em;
+    padding: 0;
+}
+
+nav ul li.parent ul.child li a {
+    display: block;
+}
+/*  test */
+
+
+footer {
+    clear: both;
+    text-align: center;
+    width: 100%;
+    bottom: 0;
+    position: relative;
+    z-index: 100;
+}
+
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}
+
+/* The Close Button */
+.close, .close-modal {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus, .close-modal:hover, .close-modal:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.btn-vis-strikethrough {
+  text-decoration: line-through;
+}
+
+#editor-container {
+  height: 375px;
+}
